@@ -13,6 +13,13 @@
 		DA20CDDA241B7A4200E69841 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA20CDD8241B7A4200E69841 /* Main.storyboard */; };
 		DA20CDDC241B7A4600E69841 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA20CDDB241B7A4600E69841 /* Assets.xcassets */; };
 		DA20CDDF241B7A4600E69841 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA20CDDD241B7A4600E69841 /* LaunchScreen.storyboard */; };
+		DAE66C90241B85E000A0E309 /* Thread.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE66C8F241B85E000A0E309 /* Thread.swift */; };
+		DAE66C96241BA85D00A0E309 /* Synchronization.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE66C95241BA85D00A0E309 /* Synchronization.swift */; };
+		DAE66C98241BA87B00A0E309 /* QualityOfService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE66C97241BA87B00A0E309 /* QualityOfService.swift */; };
+		DAE66C9A241BAC3600A0E309 /* RecursiveLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE66C99241BAC3600A0E309 /* RecursiveLock.swift */; };
+		DAE66C9C241BB44500A0E309 /* Condition.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE66C9B241BB44500A0E309 /* Condition.swift */; };
+		DAE66C9E241BC35F00A0E309 /* ReadWriteLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE66C9D241BC35F00A0E309 /* ReadWriteLock.swift */; };
+		DAE66CA0241BC6EE00A0E309 /* SpinLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE66C9F241BC6EE00A0E309 /* SpinLock.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +31,13 @@
 		DA20CDDB241B7A4600E69841 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DA20CDDE241B7A4600E69841 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DA20CDE0241B7A4600E69841 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DAE66C8F241B85E000A0E309 /* Thread.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Thread.swift; sourceTree = "<group>"; };
+		DAE66C95241BA85D00A0E309 /* Synchronization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Synchronization.swift; sourceTree = "<group>"; };
+		DAE66C97241BA87B00A0E309 /* QualityOfService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QualityOfService.swift; sourceTree = "<group>"; };
+		DAE66C99241BAC3600A0E309 /* RecursiveLock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecursiveLock.swift; sourceTree = "<group>"; };
+		DAE66C9B241BB44500A0E309 /* Condition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Condition.swift; sourceTree = "<group>"; };
+		DAE66C9D241BC35F00A0E309 /* ReadWriteLock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadWriteLock.swift; sourceTree = "<group>"; };
+		DAE66C9F241BC6EE00A0E309 /* SpinLock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinLock.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +70,7 @@
 		DA20CDD1241B7A4200E69841 /* Multithreading */ = {
 			isa = PBXGroup;
 			children = (
+				DAE66C8E241B85A100A0E309 /* Multithreading */,
 				DA20CDD2241B7A4200E69841 /* AppDelegate.swift */,
 				DA20CDD4241B7A4200E69841 /* SceneDelegate.swift */,
 				DA20CDD6241B7A4200E69841 /* ViewController.swift */,
@@ -63,6 +78,20 @@
 				DA20CDDB241B7A4600E69841 /* Assets.xcassets */,
 				DA20CDDD241B7A4600E69841 /* LaunchScreen.storyboard */,
 				DA20CDE0241B7A4600E69841 /* Info.plist */,
+			);
+			path = Multithreading;
+			sourceTree = "<group>";
+		};
+		DAE66C8E241B85A100A0E309 /* Multithreading */ = {
+			isa = PBXGroup;
+			children = (
+				DAE66C8F241B85E000A0E309 /* Thread.swift */,
+				DAE66C97241BA87B00A0E309 /* QualityOfService.swift */,
+				DAE66C95241BA85D00A0E309 /* Synchronization.swift */,
+				DAE66C99241BAC3600A0E309 /* RecursiveLock.swift */,
+				DAE66C9B241BB44500A0E309 /* Condition.swift */,
+				DAE66C9D241BC35F00A0E309 /* ReadWriteLock.swift */,
+				DAE66C9F241BC6EE00A0E309 /* SpinLock.swift */,
 			);
 			path = Multithreading;
 			sourceTree = "<group>";
@@ -138,9 +167,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DAE66CA0241BC6EE00A0E309 /* SpinLock.swift in Sources */,
+				DAE66C98241BA87B00A0E309 /* QualityOfService.swift in Sources */,
+				DAE66C9C241BB44500A0E309 /* Condition.swift in Sources */,
 				DA20CDD7241B7A4200E69841 /* ViewController.swift in Sources */,
+				DAE66C9E241BC35F00A0E309 /* ReadWriteLock.swift in Sources */,
 				DA20CDD3241B7A4200E69841 /* AppDelegate.swift in Sources */,
+				DAE66C96241BA85D00A0E309 /* Synchronization.swift in Sources */,
 				DA20CDD5241B7A4200E69841 /* SceneDelegate.swift in Sources */,
+				DAE66C90241B85E000A0E309 /* Thread.swift in Sources */,
+				DAE66C9A241BAC3600A0E309 /* RecursiveLock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
