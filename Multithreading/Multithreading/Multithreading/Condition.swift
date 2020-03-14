@@ -59,5 +59,28 @@ class MyCondition {
         condition.signal()
         condition.unlock()
     }
-    
+}
+
+class MyConditionTest {
+    func conditionTest() {
+        //[Cond]
+        let condition = MyMutexCondition()
+        // создаем свою очередь
+        let queue = DispatchQueue(label: "com.condition.serialQueue")
+        // описываем разные потоки
+        let threads: [Thread] = [
+            .init { condition.conditionTest() },
+            .init { condition.signalToCondition() } ]
+        // выполняем работу из очереди в разных потоках
+        threads.forEach { thread in queue.sync { thread.start() }}
+    }
+    func nsConditionTest() {
+        //[NS_Cond]
+        let condition = MyCondition()
+        let queue = DispatchQueue(label: "com.nsCondition.serialQueue")
+        let threads: [Thread] = [
+            .init { condition.nsConditionTest() },
+            .init { condition.signalToCondition() } ]
+        threads.forEach { thread in queue.sync { thread.start() }}
+    }
 }

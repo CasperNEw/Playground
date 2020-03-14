@@ -15,20 +15,20 @@ class MySpinLock {
     
     func test() {
         OSSpinLockLock(&lock)
-        //Do
+        //Do something
         OSSpinLockUnlock(&lock)
     }
 }
 
 //при использовании Unfair Lock доступ к ресурсу может получить произвольный поток, вне зависимости от порядка обращения
 //предпочтение идет к потоку который обращается большее количество раз
-//сокращает context switch. ресурсоемкий процесс по смене потока
+//сокращает context switch, ресурсоемкий процесс по смене потока
 class MyUnfairLock {
     private var lock = os_unfair_lock_s()
     
     func test() {
         os_unfair_lock_lock(&lock)
-        //Do
+        //Do something
         os_unfair_lock_unlock(&lock)
     }
 }

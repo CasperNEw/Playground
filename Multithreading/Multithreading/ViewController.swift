@@ -13,15 +13,23 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+//     multithreading()
+    }
+    
+    private func multithreading() {
         pthreadQosTest()
         recursiveTest()
         nsRecursiveTest()
         conditionTest()
         nsConditionTest()
+        deadlockTest()
+        atomicOperationTest()
     }
 }
 
 extension ViewController {
+    //Multithreading tests
     private func pthreadQosTest() {
         //[QoS]
         let thread = MyPthreadQos()
@@ -39,24 +47,24 @@ extension ViewController {
     }
     private func conditionTest() {
         //[Cond]
-        let condition = MyMutexCondition()
-        // создаем свою очередь
-        let queue = DispatchQueue(label: "com.condition.serialQueue")
-        // описываем разные потоки
-        let threads: [Thread] = [
-            .init { condition.conditionTest() },
-            .init { condition.signalToCondition() } ]
-        // выполняем работу из очереди в разных потоках
-        threads.forEach { thread in queue.sync { thread.start() }}
+        let condition = MyConditionTest()
+        condition.conditionTest()
     }
     private func nsConditionTest() {
         //[NS_Cond]
-        let condition = MyCondition()
-        let queue = DispatchQueue(label: "com.nsCondition.serialQueue")
-        let threads: [Thread] = [
-            .init { condition.nsConditionTest() },
-            .init { condition.signalToCondition() } ]
-        threads.forEach { thread in queue.sync { thread.start() }}
+        let condition = MyConditionTest()
+        condition.nsConditionTest()
+    }
+    private func deadlockTest() {
+        //[Deadlock]
+        let deadlock = MyDeadlockTest()
+        deadlock.deadlockTest()
+    }
+    private func atomicOperationTest() {
+        //[AtomicOp]
+        let atomic = MyAtomicOperation()
+        var atomicValue: Int64 = 33
+        atomic.atomicOperationTest(atomicValue: &atomicValue, swapValue: 22, addValue: 14)
     }
 }
 
