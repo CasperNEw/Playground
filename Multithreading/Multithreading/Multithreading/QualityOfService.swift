@@ -19,7 +19,7 @@ class MyPthreadQos {
         //создаем поток
         pthread_create(&thread, &attribute, { pointer in
             print("[QoS] test in process")
-            print("[QoS] - \(qos_class_self())")
+            print("[QoS] self - \(qos_class_self())")
             //меняем приоритет нашего потока обращаясь к спец методу 'self'
             pthread_set_qos_class_self_np(QOS_CLASS_BACKGROUND, 0)
             print("[QoS] test completed")
@@ -29,21 +29,19 @@ class MyPthreadQos {
 }
 
 //проверка работы потоков с приоритетом
-class MyQosThread {
+class MyThreadQos {
     
-    /* //errors
     func test() {
         //создаем поток
         let thread = Thread {
-            print("test")
+            print("[NS QoS] test in process")
             //распечатка приоритета текущего потока
-            print(qos_class_self())
+            print("[NS QoS] self - \(qos_class_self())")
         }
         //определяем ему приоритет
         thread.qualityOfService = .userInteractive
         thread.start()
-        //распечатка приоритета главного потока
-        print(qos_class_main())
+        print("[NS QoS] test completed")
     }
-    */
+    
 }

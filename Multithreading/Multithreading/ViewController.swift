@@ -14,11 +14,12 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-//     multithreading()
+        //     multithreading()
     }
     
     private func multithreading() {
-        pthreadQosTest()
+        threadTest()
+        qosTest()
         recursiveTest()
         nsRecursiveTest()
         conditionTest()
@@ -30,10 +31,17 @@ class ViewController: UIViewController {
 
 extension ViewController {
     //Multithreading tests
-    private func pthreadQosTest() {
-        //[QoS]
+    private func threadTest() {
+        //[Thread] & [NSThread]
+        let thread = MyThread()
+        thread.threadTests()
+    }
+    private func qosTest() {
+        //[QoS] & [NS QoS]
         let thread = MyPthreadQos()
         thread.qosTest()
+        let nsthread = MyThreadQos()
+        nsthread.test()
     }
     private func recursiveTest() {
         //[R_Lock]

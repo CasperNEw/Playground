@@ -11,22 +11,25 @@
 import Foundation
 
 class MyThread {
-    /* //errors
-    //создаем Unix поток
-    var thread = pthread_t(bitPattern: 0)
-    var attr = pthread_attr_t()
     
-    pthread_attr_init(&attr)
-    pthread_create(&thread, &attr, { pointer in
-        print("test")
-        return nil
+    func threadTests() {
+        //создаем Unix поток, Unix - POSIX
+        var thread = pthread_t(bitPattern: 0)
+        var attribute = pthread_attr_t()
+        
+        pthread_attr_init(&attribute)
+        pthread_create(&thread, &attribute, { (pointer) -> UnsafeMutableRawPointer? in
+            print("[Thread] test in progress")
+            return nil
         }, nil)
-    
-    //создаем поток NS поток, Objective-C обертка над Unix потоком
-    var nsthread = Thread(block: {
-        print("test")
-    })
-    nsthread.start()
-    */
+        
+    //создаем NS поток, Objective-C обертка над Unix потоком
+        let nsthread = Thread {
+        print("[NSThread] test in progress")
+    }
+        nsthread.start()
+        print("[Thread] test completed")
+        print("[NSThread] test completed")
+    }
 }
 
