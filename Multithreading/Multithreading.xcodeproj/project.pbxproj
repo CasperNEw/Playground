@@ -18,7 +18,11 @@
 		DA6CB8AF241FCEE1006DADD8 /* ConcurrentPerform.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6CB8AE241FCEE1006DADD8 /* ConcurrentPerform.swift */; };
 		DA6CB8B1241FD03C006DADD8 /* WorkItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6CB8B0241FD03C006DADD8 /* WorkItem.swift */; };
 		DA6CB8B3241FD9DE006DADD8 /* Semaphore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6CB8B2241FD9DE006DADD8 /* Semaphore.swift */; };
-		DA6CB8B5241FDF71006DADD8 /* Dispatch group.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6CB8B4241FDF71006DADD8 /* Dispatch group.swift */; };
+		DA6CB8B5241FDF71006DADD8 /* DispatchGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6CB8B4241FDF71006DADD8 /* DispatchGroup.swift */; };
+		DA6CB8B724212442006DADD8 /* DispatchBarrier.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6CB8B624212442006DADD8 /* DispatchBarrier.swift */; };
+		DA6CB8B92421269E006DADD8 /* DispatchSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6CB8B82421269E006DADD8 /* DispatchSource.swift */; };
+		DA6CB8BB24212D49006DADD8 /* TargetQueueHierarchy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6CB8BA24212D49006DADD8 /* TargetQueueHierarchy.swift */; };
+		DA6CB8BD242130A5006DADD8 /* DispatchIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6CB8BC242130A5006DADD8 /* DispatchIO.swift */; };
 		DAE66C90241B85E000A0E309 /* Thread.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE66C8F241B85E000A0E309 /* Thread.swift */; };
 		DAE66C96241BA85D00A0E309 /* Synchronization.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE66C95241BA85D00A0E309 /* Synchronization.swift */; };
 		DAE66C98241BA87B00A0E309 /* QualityOfService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE66C97241BA87B00A0E309 /* QualityOfService.swift */; };
@@ -45,7 +49,11 @@
 		DA6CB8AE241FCEE1006DADD8 /* ConcurrentPerform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcurrentPerform.swift; sourceTree = "<group>"; };
 		DA6CB8B0241FD03C006DADD8 /* WorkItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkItem.swift; sourceTree = "<group>"; };
 		DA6CB8B2241FD9DE006DADD8 /* Semaphore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Semaphore.swift; sourceTree = "<group>"; };
-		DA6CB8B4241FDF71006DADD8 /* Dispatch group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dispatch group.swift"; sourceTree = "<group>"; };
+		DA6CB8B4241FDF71006DADD8 /* DispatchGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DispatchGroup.swift; sourceTree = "<group>"; };
+		DA6CB8B624212442006DADD8 /* DispatchBarrier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DispatchBarrier.swift; sourceTree = "<group>"; };
+		DA6CB8B82421269E006DADD8 /* DispatchSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DispatchSource.swift; sourceTree = "<group>"; };
+		DA6CB8BA24212D49006DADD8 /* TargetQueueHierarchy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetQueueHierarchy.swift; sourceTree = "<group>"; };
+		DA6CB8BC242130A5006DADD8 /* DispatchIO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DispatchIO.swift; sourceTree = "<group>"; };
 		DAE66C8F241B85E000A0E309 /* Thread.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Thread.swift; sourceTree = "<group>"; };
 		DAE66C95241BA85D00A0E309 /* Synchronization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Synchronization.swift; sourceTree = "<group>"; };
 		DAE66C97241BA87B00A0E309 /* QualityOfService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QualityOfService.swift; sourceTree = "<group>"; };
@@ -109,7 +117,11 @@
 				DA6CB8AE241FCEE1006DADD8 /* ConcurrentPerform.swift */,
 				DA6CB8B0241FD03C006DADD8 /* WorkItem.swift */,
 				DA6CB8B2241FD9DE006DADD8 /* Semaphore.swift */,
-				DA6CB8B4241FDF71006DADD8 /* Dispatch group.swift */,
+				DA6CB8B4241FDF71006DADD8 /* DispatchGroup.swift */,
+				DA6CB8B624212442006DADD8 /* DispatchBarrier.swift */,
+				DA6CB8B82421269E006DADD8 /* DispatchSource.swift */,
+				DA6CB8BA24212D49006DADD8 /* TargetQueueHierarchy.swift */,
+				DA6CB8BC242130A5006DADD8 /* DispatchIO.swift */,
 			);
 			path = GrandCentralDispatch;
 			sourceTree = "<group>";
@@ -202,7 +214,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DA6CB8B5241FDF71006DADD8 /* Dispatch group.swift in Sources */,
+				DA6CB8B5241FDF71006DADD8 /* DispatchGroup.swift in Sources */,
 				DA6CB8AF241FCEE1006DADD8 /* ConcurrentPerform.swift in Sources */,
 				DAE66CA0241BC6EE00A0E309 /* SpinLock.swift in Sources */,
 				DA6CB8AB241FBB81006DADD8 /* Queue.swift in Sources */,
@@ -213,11 +225,15 @@
 				DA20CDD3241B7A4200E69841 /* AppDelegate.swift in Sources */,
 				DAE66C96241BA85D00A0E309 /* Synchronization.swift in Sources */,
 				DA20CDD5241B7A4200E69841 /* SceneDelegate.swift in Sources */,
+				DA6CB8BD242130A5006DADD8 /* DispatchIO.swift in Sources */,
+				DA6CB8B92421269E006DADD8 /* DispatchSource.swift in Sources */,
 				DA6CB8B3241FD9DE006DADD8 /* Semaphore.swift in Sources */,
 				DAE66CA6241CABE000A0E309 /* AtomicOperation.swift in Sources */,
 				DAE66C90241B85E000A0E309 /* Thread.swift in Sources */,
 				DAE66CA4241C9F1200A0E309 /* Deadlock.swift in Sources */,
+				DA6CB8B724212442006DADD8 /* DispatchBarrier.swift in Sources */,
 				DAE66CA2241C9E3100A0E309 /* Synchronized.swift in Sources */,
+				DA6CB8BB24212D49006DADD8 /* TargetQueueHierarchy.swift in Sources */,
 				DA6CB8B1241FD03C006DADD8 /* WorkItem.swift in Sources */,
 				DA6CB8AD241FBE51006DADD8 /* Methods.swift in Sources */,
 				DAE66C9A241BAC3600A0E309 /* RecursiveLock.swift in Sources */,

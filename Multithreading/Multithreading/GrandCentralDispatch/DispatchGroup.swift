@@ -1,5 +1,5 @@
 //
-//  Dispatch group.swift
+//  DispatchGroup.swift
 //  Multithreading
 //
 //  Created by Дмитрий Константинов on 16.03.2020.

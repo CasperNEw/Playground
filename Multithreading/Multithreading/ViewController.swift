@@ -34,7 +34,8 @@ class ViewController: UIViewController {
         //queueTest()
         //workItemTest()
         //semaphoreTest()
-        groupTest()
+        //groupTest()
+        sourceTest()
     }
 }
 
@@ -113,6 +114,12 @@ extension ViewController {
         //[DispatchGroup]
         let group = MyDispatchGroup()
         group.groupTest()
+    }
+    private func sourceTest() {
+        //[TimerSource]
+        let source = MyDispatchSource()
+        source.notify()
+        source.addData(count: 3)
     }
     
 }
