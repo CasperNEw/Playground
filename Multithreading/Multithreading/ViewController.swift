@@ -15,6 +15,8 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         //     multithreading()
+        grandCentralDispatch()
+        
     }
     
     private func multithreading() {
@@ -26,6 +28,13 @@ class ViewController: UIViewController {
         nsConditionTest()
         deadlockTest()
         atomicOperationTest()
+    }
+    
+    private func grandCentralDispatch() {
+        //queueTest()
+        //workItemTest()
+        //semaphoreTest()
+        groupTest()
     }
 }
 
@@ -51,22 +60,28 @@ extension ViewController {
     private func nsRecursiveTest() {
         //[NSR_Lock]
         let recursive = MyRecursiveLock()
-        recursive.nsRecursiveTest()
+        recursive.start()
     }
     private func conditionTest() {
         //[Cond]
-        let condition = MyConditionTest()
-        condition.conditionTest()
+        let conditionPrinter = MyMutexConditionPrinter()
+        let conditionWriter = MyMutexConditionWriter()
+        conditionPrinter.start()
+        conditionWriter.start()
     }
     private func nsConditionTest() {
         //[NS_Cond]
-        let condition = MyConditionTest()
-        condition.nsConditionTest()
+        let conditionPrinter = MyConditionPrinter()
+        let conditionWriter = MyConditionWriter()
+        conditionPrinter.start()
+        conditionWriter.start()
     }
     private func deadlockTest() {
         //[Deadlock]
         let deadlock = MyDeadlockTest()
         deadlock.deadlockTest()
+        //MARK: major multithreading issues
+        //print(deadlock.issuesString)
     }
     private func atomicOperationTest() {
         //[AtomicOp]
@@ -76,3 +91,28 @@ extension ViewController {
     }
 }
 
+extension ViewController {
+    //GCD tests
+    private func queueTest() {
+        //[Queue ...]
+        let queue = MyAsyncVsSyncTest()
+        queue.specialTest()
+    }
+    private func workItemTest() {
+        //[WorkItem]
+        let workItem = MyDispatchWorkItem()
+        workItem.something()
+    }
+    private func semaphoreTest() {
+        //[Semaphore]
+        let semaphore = MySemaphore()
+        //semaphore.signalTest()
+        semaphore.threadCountTest()
+    }
+    private func groupTest() {
+        //[DispatchGroup]
+        let group = MyDispatchGroup()
+        group.groupTest()
+    }
+    
+}

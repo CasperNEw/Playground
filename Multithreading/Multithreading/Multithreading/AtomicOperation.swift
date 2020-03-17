@@ -8,6 +8,33 @@
 
 import Foundation
 //общие принципы реализации атомарных операций
+class MyMemoryBarrier {
+    //осторожно псевдокод, сильно упрощенный
+    //метод MemoryBarrier обеспечивает выполнение операций 'после него', только после выполнения операций 'до него'
+    class MyType {
+        var valueOne: Int?
+        var valueTwo: Int?
+    }
+    var myValue: MyType?
+    
+    func barrierTest() {
+        let firstThread = Thread {
+            let value = MyType()
+            value.valueOne = 100
+            value.valueTwo = 500
+            OSMemoryBarrier()
+            self.myValue = value
+        }
+        firstThread.start()
+        
+        let secondThread = Thread {
+            while self.myValue == nil { }
+            OSMemoryBarrier()
+            print(self.myValue?.valueOne ?? "[Memory Barrier] error, I know that the value should not be nil, but it is nil ...")
+        }
+        secondThread.start()
+    }
+}
 class MyAtomicOperation {
     //осторожно псевдокод, сильно упрощенный
     private func compareAndSwap(old: Int, new: Int, value: UnsafeMutablePointer<Int>) -> Bool {

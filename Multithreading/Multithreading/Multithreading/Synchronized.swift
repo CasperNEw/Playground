@@ -7,7 +7,7 @@
 //
 
 import Foundation
-//конструкция основана на recursive mutex, лучше испольщзовать его на прямую
+//конструкция основана на recursive mutex, лучше использовать его на прямую
 class MySynchronized {
     //в качестве mutex используем NSObject
     private let lock = NSObject()

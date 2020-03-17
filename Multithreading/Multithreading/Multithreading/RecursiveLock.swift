@@ -10,6 +10,7 @@ import Foundation
 
 class MyRecursiveMutex {
     //рекурсивный Unix mutex
+    //mutex - защита объекта от доступа к нему из других потоков
     private var mutex = pthread_mutex_t()
     private var attr = pthread_mutexattr_t()
     
@@ -19,33 +20,43 @@ class MyRecursiveMutex {
         pthread_mutex_init(&mutex, &attr)
     }
     func recursiveTest() {
+        print("[R_Lock] test start")
         pthread_mutex_lock(&mutex)
         mutexTest()
-        pthread_mutex_unlock(&mutex)
+        defer {
+            pthread_mutex_unlock(&mutex)
+        }
         print("[R_Lock] test completed")
     }
     private func mutexTest() {
         pthread_mutex_lock(&mutex)
-        print("[R_Lock] test in process")
         print("[R_Lock] \(qos_class_self())")
-        pthread_mutex_unlock(&mutex)
+        defer {
+            pthread_mutex_unlock(&mutex)
+        }
+        print("[R_Lock] method in test completed")
     }
 }
 
-class MyRecursiveLock {
+class MyRecursiveLock: Thread {
     //рекурсивный mutex используя возможности фреймворка Foundation
-    private let lock = NSRecursiveLock()
+    private let recursiveLock = NSRecursiveLock()
     
-    func nsRecursiveTest() {
-        lock.lock()
+    override func main() {
+        print("[NSR_Lock] test start")
+        recursiveLock.lock()
         lockTest()
-        lock.unlock()
+        defer {
+            recursiveLock.unlock()
+        }
         print("[NSR_Lock] test completed")
     }
     private func lockTest() {
-        lock.lock()
-        print("[NSR_Lock] test in process")
+        recursiveLock.lock()
         print("[NSR_Lock] \(qos_class_self())")
-        lock.unlock()
+        defer {
+            recursiveLock.unlock()
+        }
+        print("[NSR_Lock] method in test completed")
     }
 }

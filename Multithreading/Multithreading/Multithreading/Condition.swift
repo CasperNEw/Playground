@@ -8,79 +8,101 @@
 
 import Foundation
 
-class MyMutexCondition {
-    private var condition = pthread_cond_t()
-    private var mutex = pthread_mutex_t()
-    private var check = false
+class MyCondition {
+    //решил сделать Seangleton что бы не создавать глобальные переменные, так как в перспективе возможно большое увеличение их количества
+    static let instance = MyCondition()
+    private init() {}
     
-    init() {
-        pthread_cond_init(&condition, nil)
-        pthread_mutex_init(&mutex, nil)
+    var condition = pthread_cond_t()
+    var mutex = pthread_mutex_t()
+    var conditionCheck = false
+    
+    var nsCondition = NSCondition()
+    var nsConditionCheck = false
+}
+
+class MyMutexConditionPrinter: Thread {
+    
+    override init() {
+        pthread_cond_init(&MyCondition.instance.condition, nil)
+        pthread_mutex_init(&MyCondition.instance.mutex, nil)
     }
-    func conditionTest() {
-        pthread_mutex_lock(&mutex)
+    
+    override func main() {
+        printMethod()
+    }
+    
+    private func printMethod() {
+        pthread_mutex_lock(&MyCondition.instance.mutex)
         print("[Cond] test in progress")
-        while !check {
-            print("[Cond] waiting condition")
-            pthread_cond_wait(&condition, &mutex)
+        while !MyCondition.instance.conditionCheck {
+            print("[Cond] condition wait")
+            pthread_cond_wait(&MyCondition.instance.condition, &MyCondition.instance.mutex)
         }
-        pthread_mutex_unlock(&mutex)
+        MyCondition.instance.conditionCheck = false
+        defer {
+            pthread_mutex_unlock(&MyCondition.instance.mutex)
+        }
         print("[Cond] test completed")
     }
     
-    func signalToCondition() {
-        pthread_mutex_lock(&mutex)
+}
+
+class MyMutexConditionWriter: Thread {
+    
+    override init() {
+        pthread_cond_init(&MyCondition.instance.condition, nil)
+        pthread_mutex_init(&MyCondition.instance.mutex, nil)
+    }
+    
+    override func main() {
+        writeMethod()
+    }
+    
+    private func writeMethod() {
+        pthread_mutex_lock(&MyCondition.instance.mutex)
+        MyCondition.instance.conditionCheck = true
+        pthread_cond_signal(&MyCondition.instance.condition)
+        defer {
+            pthread_mutex_unlock(&MyCondition.instance.mutex)
+        }
         print("[Cond] signal to condition")
-        check = true
-        pthread_cond_signal(&condition)
-        pthread_mutex_unlock(&mutex)
     }
 }
 
-class MyCondition {
-    private let condition = NSCondition()
-    private var check = false
+class MyConditionPrinter: Thread {
     
-    func nsConditionTest() {
-        condition.lock()
+    override func main() {
+        printMethod()
+    }
+    
+    private func printMethod() {
+        MyCondition.instance.nsCondition.lock()
         print("[NS_Cond] test in progress")
-        while !check {
+        while !MyCondition.instance.nsConditionCheck {
             print("[NS_Cond] waiting condition")
-            condition.wait()
+            MyCondition.instance.nsCondition.wait()
         }
-        condition.unlock()
+        MyCondition.instance.nsConditionCheck = false
+        defer {
+            MyCondition.instance.nsCondition.unlock()
+        }
         print("[NS_Cond] test completed")
     }
-    
-    func signalToCondition() {
-        condition.lock()
-        print("[NS_Cond] signal to condition")
-        check = true
-        condition.signal()
-        condition.unlock()
-    }
 }
-
-class MyConditionTest {
-    func conditionTest() {
-        //[Cond]
-        let condition = MyMutexCondition()
-        // создаем свою очередь
-        let queue = DispatchQueue(label: "com.condition.serialQueue")
-        // описываем разные потоки
-        let threads: [Thread] = [
-            .init { condition.conditionTest() },
-            .init { condition.signalToCondition() } ]
-        // выполняем работу из очереди в разных потоках
-        threads.forEach { thread in queue.sync { thread.start() }}
+class MyConditionWriter: Thread {
+    
+    override func main() {
+        writeMethod()
     }
-    func nsConditionTest() {
-        //[NS_Cond]
-        let condition = MyCondition()
-        let queue = DispatchQueue(label: "com.nsCondition.serialQueue")
-        let threads: [Thread] = [
-            .init { condition.nsConditionTest() },
-            .init { condition.signalToCondition() } ]
-        threads.forEach { thread in queue.sync { thread.start() }}
+    
+    private func writeMethod() {
+        MyCondition.instance.nsCondition.lock()
+        MyCondition.instance.nsConditionCheck = true
+        MyCondition.instance.nsCondition.signal()
+        defer {
+            MyCondition.instance.nsCondition.unlock()
+        }
+        print("[NS_Cond] signal to condition")
     }
 }

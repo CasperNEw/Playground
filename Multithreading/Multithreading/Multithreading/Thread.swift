@@ -28,8 +28,10 @@ class MyThread {
         print("[NSThread] test in progress")
     }
         nsthread.start()
+        Thread.setThreadPriority(1.0)
         print("[Thread] test completed")
         print("[NSThread] test completed")
+        print("[NSThread] isFinished - \(nsthread.isFinished)")
     }
 }
 

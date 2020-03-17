@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+//Quality of Service * Качество обслуживания
 class MyPthreadQos {
     
     func qosTest() {

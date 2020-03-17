@@ -20,7 +20,7 @@ class MyReadWriteLock {
     }
     
     //пример работы RWL на обращении к свойству класса
-    var readWriteProperty: Int {
+    public var readWriteProperty: Int {
         get {
             //блокируем на запись
             pthread_rwlock_rdlock(&lock)
