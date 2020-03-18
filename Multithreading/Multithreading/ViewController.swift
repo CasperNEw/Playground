@@ -9,17 +9,30 @@
 import UIKit
 
 class ViewController: UIViewController {
+    
+    var firstButton = UIButton()
+    var secondButton = UIButton()
+    var secondButtonIsReady = true
+    var secondButtonPushTime = Date()
+    var thirdButton = UIButton()
+    var thirdButtonIsReady = true
+    var thirdButtonPushTime = Date()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
-        //     multithreading()
-        grandCentralDispatch()
-        
+        setupView()
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        initFirstButton()
+        initSecondButton()
+        initThirdButton()
     }
     
     private func multithreading() {
+        startNotification()
+        restartSecondButton()
         threadTest()
         qosTest()
         recursiveTest()
@@ -28,14 +41,96 @@ class ViewController: UIViewController {
         nsConditionTest()
         deadlockTest()
         atomicOperationTest()
+        
+        DispatchQueue.global().asyncAfter(deadline: .now() + 10) {
+            self.secondButtonIsReady = true
+        }
     }
     
     private func grandCentralDispatch() {
-        //queueTest()
-        //workItemTest()
-        //semaphoreTest()
-        //groupTest()
+        //TODO: notification, bad latency
+        gdcNotification()
+        restartThirdButton()
+        queueTest()
+        workItemTest()
+        semaphoreTest()
+        groupTest()
         sourceTest()
+    }
+}
+
+extension ViewController {
+    
+    private func setupView() {
+        self.title = "Introduction in GCD"
+        self.navigationController?.navigationBar.barTintColor = UIColor.darkGray
+        self.navigationController?.navigationBar.tintColor = UIColor.black
+        self.view.backgroundColor = .gray
+        
+        firstButton.addTarget(self, action: #selector(firstButtonAction), for: .touchUpInside)
+        secondButton.addTarget(self, action: #selector(secondButtonAction), for: .touchUpInside)
+        thirdButton.addTarget(self, action: #selector(thirdButtonAction), for: .touchUpInside)
+    }
+    
+    @objc func firstButtonAction() {
+        let vc = SecondViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    @objc func secondButtonAction() {
+        secondButtonIsReady ? multithreading() : timeNotification(date: secondButtonPushTime)
+    }
+    @objc func thirdButtonAction() {
+        thirdButtonIsReady ? grandCentralDispatch() : timeNotification(date: thirdButtonPushTime)
+    }
+    
+    private func initFirstButton() {
+        firstButton.frame = CGRect(x: 0, y: 0, width: 300, height: 50)
+        firstButton.center = view.center
+        firstButton.setTitle("Load Image", for: .normal)
+        firstButton.backgroundColor = UIColor.darkGray
+        firstButton.layer.cornerRadius = 15
+        firstButton.setTitleColor(UIColor.white, for: .normal)
+        view.addSubview(firstButton)
+    }
+    private func initSecondButton() {
+        secondButton.frame = CGRect(x: 0, y: 0, width: 300, height: 50)
+        secondButton.center = CGPoint(x: view.center.x, y: view.center.y + CGFloat(70))
+        secondButton.setTitle("Multithreading tests", for: .normal)
+        secondButton.backgroundColor = UIColor.darkGray
+        secondButton.layer.cornerRadius = 15
+        secondButton.setTitleColor(UIColor.white, for: .normal)
+        view.addSubview(secondButton)
+    }
+    private func initThirdButton() {
+        thirdButton.frame = CGRect(x: 0, y: 0, width: 300, height: 50)
+        thirdButton.center = CGPoint(x: view.center.x, y: view.center.y + CGFloat(140))
+        thirdButton.setTitle("GCD tests", for: .normal)
+        thirdButton.backgroundColor = UIColor.darkGray
+        thirdButton.layer.cornerRadius = 15
+        thirdButton.setTitleColor(UIColor.white, for: .normal)
+        view.addSubview(thirdButton)
+    }
+    private func startNotification() {
+        let alert = UIAlertController(title: "Notification", message: "The test restarts for 10 seconds, you can see the result in the console", preferredStyle: .actionSheet)
+        alert.view.tintColor = .darkGray
+        let action = UIAlertAction(title: "Ok", style: .default, handler: nil)
+        alert.addAction(action)
+        self.present(alert, animated: true, completion: nil)
+    }
+    private func timeNotification(date: Date) {
+        let time = 10 - Int(Date().timeIntervalSince(date))
+        let alert = UIAlertController(title: "Notification", message: "method will be available in \(time) seconds", preferredStyle: .actionSheet)
+        alert.view.tintColor = .darkGray
+        let action = UIAlertAction(title: "Ok", style: .default, handler: nil)
+        alert.addAction(action)
+        self.present(alert, animated: true, completion: nil)
+    }
+    private func gdcNotification() {
+        let alert = UIAlertController(title: "Notification", message: "Test completed, you can see the result in the console", preferredStyle: .actionSheet)
+        alert.view.tintColor = .darkGray
+        let action = UIAlertAction(title: "Ok", style: .default, handler: nil)
+        alert.addAction(action)
+        self.present(alert, animated: true, completion: nil)
     }
 }
 
@@ -90,6 +185,13 @@ extension ViewController {
         var atomicValue: Int64 = 33
         atomic.atomicOperationTest(atomicValue: &atomicValue, swapValue: 22, addValue: 14)
     }
+    private func restartSecondButton() {
+        secondButtonIsReady = false
+        secondButtonPushTime = Date()
+        DispatchQueue.global().asyncAfter(deadline: .now() + 10) {
+            self.secondButtonIsReady = true
+        }
+    }
 }
 
 extension ViewController {
@@ -107,7 +209,7 @@ extension ViewController {
     private func semaphoreTest() {
         //[Semaphore]
         let semaphore = MySemaphore()
-        //semaphore.signalTest()
+        semaphore.signalTest()
         semaphore.threadCountTest()
     }
     private func groupTest() {
@@ -121,5 +223,13 @@ extension ViewController {
         source.notify()
         source.addData(count: 3)
     }
-    
+    private func restartThirdButton() {
+        thirdButtonIsReady = false
+        thirdButtonPushTime = Date()
+        let thread = Thread {
+            sleep(10)
+            self.thirdButtonIsReady = true
+        }
+        thread.start()
+    }
 }

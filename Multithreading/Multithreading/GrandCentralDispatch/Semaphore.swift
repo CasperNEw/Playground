@@ -23,7 +23,7 @@ class MySemaphore {
         print("[Semaphore] test completed")
     }
     
-    func access() {
+    private func access() {
         anotherSemaphore.wait()
         print("[Semaphore] thread can access")
         sleep(2)
