@@ -24,6 +24,7 @@
 		DA6CB8BB24212D49006DADD8 /* TargetQueueHierarchy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6CB8BA24212D49006DADD8 /* TargetQueueHierarchy.swift */; };
 		DA6CB8BD242130A5006DADD8 /* DispatchIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6CB8BC242130A5006DADD8 /* DispatchIO.swift */; };
 		DA6CB8BF24226752006DADD8 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6CB8BE24226752006DADD8 /* SecondViewController.swift */; };
+		DA6CB8C124236851006DADD8 /* DispatchAfter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6CB8C024236851006DADD8 /* DispatchAfter.swift */; };
 		DAE66C90241B85E000A0E309 /* Thread.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE66C8F241B85E000A0E309 /* Thread.swift */; };
 		DAE66C96241BA85D00A0E309 /* Synchronization.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE66C95241BA85D00A0E309 /* Synchronization.swift */; };
 		DAE66C98241BA87B00A0E309 /* QualityOfService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE66C97241BA87B00A0E309 /* QualityOfService.swift */; };
@@ -56,6 +57,7 @@
 		DA6CB8BA24212D49006DADD8 /* TargetQueueHierarchy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetQueueHierarchy.swift; sourceTree = "<group>"; };
 		DA6CB8BC242130A5006DADD8 /* DispatchIO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DispatchIO.swift; sourceTree = "<group>"; };
 		DA6CB8BE24226752006DADD8 /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
+		DA6CB8C024236851006DADD8 /* DispatchAfter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DispatchAfter.swift; sourceTree = "<group>"; };
 		DAE66C8F241B85E000A0E309 /* Thread.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Thread.swift; sourceTree = "<group>"; };
 		DAE66C95241BA85D00A0E309 /* Synchronization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Synchronization.swift; sourceTree = "<group>"; };
 		DAE66C97241BA87B00A0E309 /* QualityOfService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QualityOfService.swift; sourceTree = "<group>"; };
@@ -118,6 +120,7 @@
 				DA6CB8AA241FBB81006DADD8 /* Queue.swift */,
 				DA6CB8AC241FBE51006DADD8 /* Methods.swift */,
 				DA6CB8AE241FCEE1006DADD8 /* ConcurrentPerform.swift */,
+				DA6CB8C024236851006DADD8 /* DispatchAfter.swift */,
 				DA6CB8B0241FD03C006DADD8 /* WorkItem.swift */,
 				DA6CB8B2241FD9DE006DADD8 /* Semaphore.swift */,
 				DA6CB8B4241FDF71006DADD8 /* DispatchGroup.swift */,
@@ -232,6 +235,7 @@
 				DA6CB8BD242130A5006DADD8 /* DispatchIO.swift in Sources */,
 				DA6CB8B92421269E006DADD8 /* DispatchSource.swift in Sources */,
 				DA6CB8B3241FD9DE006DADD8 /* Semaphore.swift in Sources */,
+				DA6CB8C124236851006DADD8 /* DispatchAfter.swift in Sources */,
 				DAE66CA6241CABE000A0E309 /* AtomicOperation.swift in Sources */,
 				DAE66C90241B85E000A0E309 /* Thread.swift in Sources */,
 				DAE66CA4241C9F1200A0E309 /* Deadlock.swift in Sources */,

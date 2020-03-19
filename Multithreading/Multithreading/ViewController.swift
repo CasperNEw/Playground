@@ -52,6 +52,7 @@ class ViewController: UIViewController {
         gdcNotification()
         restartThirdButton()
         queueTest()
+        dispatchAfterTest()
         workItemTest()
         semaphoreTest()
         groupTest()
@@ -200,6 +201,11 @@ extension ViewController {
         //[Queue ...]
         let queue = MyAsyncVsSyncTest()
         queue.specialTest()
+    }
+    private func dispatchAfterTest() {
+        //[DispatchAfter]
+        let dispatchAfter = MyDispatchAfter()
+        dispatchAfter.afterTest()
     }
     private func workItemTest() {
         //[WorkItem]
