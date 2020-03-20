@@ -13,10 +13,8 @@ class ViewController: UIViewController {
     var firstButton = UIButton()
     var secondButton = UIButton()
     var secondButtonIsReady = true
-    var secondButtonPushTime = Date()
     var thirdButton = UIButton()
     var thirdButtonIsReady = true
-    var thirdButtonPushTime = Date()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,34 +25,6 @@ class ViewController: UIViewController {
         initFirstButton()
         initSecondButton()
         initThirdButton()
-    }
-    
-    private func multithreading() {
-        startNotification()
-        restartSecondButton()
-        threadTest()
-        qosTest()
-        recursiveTest()
-        nsRecursiveTest()
-        conditionTest()
-        nsConditionTest()
-        deadlockTest()
-        atomicOperationTest()
-    }
-    
-    private func grandCentralDispatch() {
-        startNotification()
-        restartThirdButton()
-        
-        let queue = DispatchQueue.global()
-        queue.async { [weak self] in
-            self?.queueTest()
-            self?.dispatchAfterTest()
-            self?.workItemTest()
-            self?.semaphoreTest()
-            self?.groupTest()
-            self?.sourceTest()
-        }
     }
 }
 
@@ -76,10 +46,10 @@ extension ViewController {
         self.navigationController?.pushViewController(vc, animated: true)
     }
     @objc func secondButtonAction() {
-        secondButtonIsReady ? multithreading() : timeNotification(date: secondButtonPushTime)
+        secondButtonIsReady ? multithreading() : testIsRunningNotification()
     }
     @objc func thirdButtonAction() {
-        thirdButtonIsReady ? grandCentralDispatch() : timeNotification(date: thirdButtonPushTime)
+        thirdButtonIsReady ? grandCentralDispatch() : testIsRunningNotification()
     }
     
     private func initFirstButton() {
@@ -109,18 +79,17 @@ extension ViewController {
         thirdButton.setTitleColor(UIColor.white, for: .normal)
         view.addSubview(thirdButton)
     }
-    private func startNotification() {
-        let alert = UIAlertController(title: "Notification", message: "The test restarts for 10 seconds, you can see the result in the console", preferredStyle: .actionSheet)
+    private func testStartNotification(time: Int) {
+        let alert = UIAlertController(title: "Notification", message: "The test is running, the average runtime is \(String(time)) seconds, you can see the result in the console", preferredStyle: .actionSheet)
         alert.view.tintColor = .darkGray
-        let action = UIAlertAction(title: "Ok", style: .default, handler: nil)
+        let action = UIAlertAction(title: "OK", style: .default, handler: nil)
         alert.addAction(action)
         self.present(alert, animated: true, completion: nil)
     }
-    private func timeNotification(date: Date) {
-        let time = 10 - Int(Date().timeIntervalSince(date))
-        let alert = UIAlertController(title: "Notification", message: "method will be available in \(time) seconds", preferredStyle: .actionSheet)
+    private func testIsRunningNotification() {
+        let alert = UIAlertController(title: "Notification", message: "The test is still running, please wait", preferredStyle: .actionSheet)
         alert.view.tintColor = .darkGray
-        let action = UIAlertAction(title: "Ok", style: .default, handler: nil)
+        let action = UIAlertAction(title: "OK", style: .default, handler: nil)
         alert.addAction(action)
         self.present(alert, animated: true, completion: nil)
     }
@@ -128,6 +97,27 @@ extension ViewController {
 
 extension ViewController {
     //Multithreading tests
+    private func multithreading() {
+        secondButtonIsReady = false
+        testStartNotification(time: 3)
+        
+        let group = DispatchGroup()
+        let queue = DispatchQueue.global()
+        queue.async(group: group) { [weak self] in
+            self?.threadTest()
+            self?.qosTest()
+            self?.recursiveTest()
+            self?.nsRecursiveTest()
+            self?.conditionTest()
+            self?.nsConditionTest()
+            self?.deadlockTest()
+            self?.atomicOperationTest()
+        }
+        group.notify(queue: .main) { [weak self] in
+            self?.secondButtonIsReady = true
+            print("[Multithreading] All test completed")
+        }
+    }
     private func threadTest() {
         //[Thread] & [NSThread]
         let thread = MyThread()
@@ -177,19 +167,29 @@ extension ViewController {
         var atomicValue: Int64 = 33
         atomic.atomicOperationTest(atomicValue: &atomicValue, swapValue: 22, addValue: 14)
     }
-    private func restartSecondButton() {
-        secondButtonIsReady = false
-        secondButtonPushTime = Date()
-        let thread = Thread { [weak self] in
-            sleep(10)
-            self?.secondButtonIsReady = true
-        }
-        thread.start()
-    }
 }
 
 extension ViewController {
     //GCD tests
+    private func grandCentralDispatch() {
+        thirdButtonIsReady = false
+        testStartNotification(time: 10)
+        
+        let group = DispatchGroup()
+        let queue = DispatchQueue.global()
+        queue.async(group: group) { [weak self] in
+            self?.queueTest()
+            self?.dispatchAfterTest()
+            self?.workItemTest()
+            self?.semaphoreTest()
+            self?.groupTest()
+            self?.sourceTest()
+        }
+        group.notify(queue: .main) { [weak self] in
+            self?.thirdButtonIsReady = true
+            print("[GDC] All test completed")
+        }
+    }
     private func queueTest() {
         //[Queue ...]
         let queue = MyAsyncVsSyncTest()
@@ -221,14 +221,5 @@ extension ViewController {
         let source = MyDispatchSource()
         source.notify()
         source.addData(count: 3)
-    }
-    private func restartThirdButton() {
-        thirdButtonIsReady = false
-        thirdButtonPushTime = Date()
-        let thread = Thread { [weak self] in
-            sleep(10)
-            self?.thirdButtonIsReady = true
-        }
-        thread.start()
     }
 }

@@ -80,7 +80,8 @@ class ImagesViewController: UIViewController {
             for index in 0...5 {
                 self?.imageView.imageViews[index].image = self?.images[index]
             }
-            self?.label.isHidden = true
+            //self?.label.isHidden = true
+            self?.label.text = "Test completed"
         }
     }
     
