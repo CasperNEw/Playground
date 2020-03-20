@@ -27,4 +27,35 @@ class MyDispatchBarrier {
         }
         return tempValue
     }
+    
+    func safeArrayHandling() {
+        let array = SafeArray<Int>()
+        DispatchQueue.concurrentPerform(iterations: 100) { (index) in
+            array.append(index)
+        }
+        
+        print("[DispatchBarrier] array: ", array.valueArray)
+        print("[DispatchBarrier] array.count: ", array.valueArray.count)
+    }
+    
+    
+}
+
+class SafeArray<T> {
+    private var array = [T]()
+    private let queue = DispatchQueue(label: "SafeArrayQueue", attributes: .concurrent)
+    
+    public func append(_ value: T) {
+        queue.async(flags: .barrier) {
+            self.array.append(value)
+        }
+    }
+    
+    public var valueArray: [T] {
+        var result = [T]()
+        queue.sync {
+            result = self.array
+        }
+        return result
+    }
 }
