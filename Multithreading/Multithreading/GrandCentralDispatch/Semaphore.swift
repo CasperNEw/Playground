@@ -10,7 +10,8 @@ import Foundation
 
 class MySemaphore {
     private let semaphore = DispatchSemaphore(value: 0)
-    private let anotherSemaphore = DispatchSemaphore(value: 2) //defaulte, zero, =2
+    private let anotherSemaphore = DispatchSemaphore(value: 2)
+    private let moreAnotherSemaphore = DispatchSemaphore(value: 0)
     
     func signalTest() {
         print("[Semaphore] start test")
@@ -24,10 +25,10 @@ class MySemaphore {
     }
     
     private func access() {
-        anotherSemaphore.wait()
+        anotherSemaphore.wait() //-1
         print("[Semaphore] thread can access")
-        sleep(2)
-        anotherSemaphore.signal()
+        sleep(1)
+        anotherSemaphore.signal() //+1
     }
     
     func threadCountTest() {
@@ -40,6 +41,16 @@ class MySemaphore {
         }
         DispatchQueue.global().async {
             self.access()
+        }
+    }
+    
+    private func  concurrentPerformTest() {
+        moreAnotherSemaphore.signal()
+        DispatchQueue.concurrentPerform(iterations: 10) { (index) in
+            moreAnotherSemaphore.wait()
+            sleep(1)
+            print("Block", String(index))
+            moreAnotherSemaphore.signal()
         }
     }
     

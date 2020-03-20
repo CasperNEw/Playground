@@ -20,7 +20,6 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         setupView()
     }
     override func viewDidAppear(_ animated: Bool) {
@@ -42,8 +41,8 @@ class ViewController: UIViewController {
         deadlockTest()
         atomicOperationTest()
         
-        DispatchQueue.global().asyncAfter(deadline: .now() + 10) {
-            self.secondButtonIsReady = true
+        DispatchQueue.global().asyncAfter(deadline: .now() + 10) { [weak self] in
+            self?.secondButtonIsReady = true
         }
     }
     
@@ -74,7 +73,7 @@ extension ViewController {
     }
     
     @objc func firstButtonAction() {
-        let vc = SecondViewController()
+        let vc = PhotoViewController()
         self.navigationController?.pushViewController(vc, animated: true)
     }
     @objc func secondButtonAction() {
@@ -189,8 +188,8 @@ extension ViewController {
     private func restartSecondButton() {
         secondButtonIsReady = false
         secondButtonPushTime = Date()
-        DispatchQueue.global().asyncAfter(deadline: .now() + 10) {
-            self.secondButtonIsReady = true
+        DispatchQueue.global().asyncAfter(deadline: .now() + 10) { [weak self] in
+            self?.secondButtonIsReady = true
         }
     }
 }
@@ -232,9 +231,9 @@ extension ViewController {
     private func restartThirdButton() {
         thirdButtonIsReady = false
         thirdButtonPushTime = Date()
-        let thread = Thread {
+        let thread = Thread { [weak self] in
             sleep(10)
-            self.thirdButtonIsReady = true
+            self?.thirdButtonIsReady = true
         }
         thread.start()
     }

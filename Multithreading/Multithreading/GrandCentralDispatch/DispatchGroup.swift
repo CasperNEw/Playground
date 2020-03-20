@@ -44,8 +44,9 @@ class MyDispatchGroup {
             self.anotherGroup.leave()
         }
         anotherGroup.wait()
-        print("[DispatchGroup] another test completed")
-        
+        anotherGroup.notify(queue: .main) {
+            print("[DispatchGroup] another test completed")
+        }
     }
     
 }
