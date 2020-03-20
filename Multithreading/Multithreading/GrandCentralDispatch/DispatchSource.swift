@@ -10,7 +10,7 @@ import Foundation
 
 class MyDispatchSource {
     
-    private let timerSource = DispatchSource.makeTimerSource()
+    private let timerSource = DispatchSource.makeTimerSource(queue: DispatchQueue.global())
     private let userDataAddSource = DispatchSource.makeUserDataAddSource(queue: DispatchQueue.main)
     
     init() {

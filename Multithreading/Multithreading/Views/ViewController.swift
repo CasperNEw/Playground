@@ -40,22 +40,21 @@ class ViewController: UIViewController {
         nsConditionTest()
         deadlockTest()
         atomicOperationTest()
-        
-        DispatchQueue.global().asyncAfter(deadline: .now() + 10) { [weak self] in
-            self?.secondButtonIsReady = true
-        }
     }
     
     private func grandCentralDispatch() {
-        //TODO: notification, bad latency
-        gdcNotification()
+        startNotification()
         restartThirdButton()
-        queueTest()
-        dispatchAfterTest()
-        workItemTest()
-        semaphoreTest()
-        groupTest()
-        sourceTest()
+        
+        let queue = DispatchQueue.global()
+        queue.async { [weak self] in
+            self?.queueTest()
+            self?.dispatchAfterTest()
+            self?.workItemTest()
+            self?.semaphoreTest()
+            self?.groupTest()
+            self?.sourceTest()
+        }
     }
 }
 
@@ -125,13 +124,6 @@ extension ViewController {
         alert.addAction(action)
         self.present(alert, animated: true, completion: nil)
     }
-    private func gdcNotification() {
-        let alert = UIAlertController(title: "Notification", message: "Test completed, you can see the result in the console", preferredStyle: .actionSheet)
-        alert.view.tintColor = .darkGray
-        let action = UIAlertAction(title: "Ok", style: .default, handler: nil)
-        alert.addAction(action)
-        self.present(alert, animated: true, completion: nil)
-    }
 }
 
 extension ViewController {
@@ -188,9 +180,11 @@ extension ViewController {
     private func restartSecondButton() {
         secondButtonIsReady = false
         secondButtonPushTime = Date()
-        DispatchQueue.global().asyncAfter(deadline: .now() + 10) { [weak self] in
+        let thread = Thread { [weak self] in
+            sleep(10)
             self?.secondButtonIsReady = true
         }
+        thread.start()
     }
 }
 
