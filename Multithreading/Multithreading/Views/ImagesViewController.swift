@@ -64,6 +64,7 @@ class ImagesViewController: UIViewController {
     }
     
     private func asyncGroup() {
+        print("[LoadImages] DispatchGroup loading started")
         let aGroup = DispatchGroup()
         
         for index in 0...5 {
@@ -82,10 +83,12 @@ class ImagesViewController: UIViewController {
             }
             //self?.label.isHidden = true
             self?.label.text = "Test completed"
+            print("[LoadImages] DispatchGroup loading completed")
         }
     }
     
     private func asyncUrlSession() {
+        print("[LoadImages] URLSession loading started")
         for index in 6...8 {
             guard let url = URL(string: imagesURLs[index]) else { return }
             let request = URLRequest(url: url)
@@ -97,5 +100,6 @@ class ImagesViewController: UIViewController {
             }
             task.resume()
         }
+        print("[LoadImages] URLSession loading completed")
     }
 }

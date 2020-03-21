@@ -15,6 +15,15 @@
 		DA20CDDA241B7A4200E69841 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA20CDD8241B7A4200E69841 /* Main.storyboard */; };
 		DA20CDDC241B7A4600E69841 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA20CDDB241B7A4600E69841 /* Assets.xcassets */; };
 		DA20CDDF241B7A4600E69841 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA20CDDD241B7A4600E69841 /* LaunchScreen.storyboard */; };
+		DA58F54E2425283C009931DD /* Operation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA58F54D2425283C009931DD /* Operation.swift */; };
+		DA6B23712425C31C0090FEF7 /* Operation&OperationQueueu.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6B23702425C31C0090FEF7 /* Operation&OperationQueueu.swift */; };
+		DA6B23732425C9090090FEF7 /* AsyncOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6B23722425C9090090FEF7 /* AsyncOperation.swift */; };
+		DA6B23752425CF330090FEF7 /* MaxConcurrentOperationCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6B23742425CF330090FEF7 /* MaxConcurrentOperationCount.swift */; };
+		DA6B23772425D0E60090FEF7 /* CancelOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6B23762425D0E60090FEF7 /* CancelOperation.swift */; };
+		DA6B237B2425D8510090FEF7 /* Dependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6B237A2425D8510090FEF7 /* Dependencies.swift */; };
+		DA6B237D2425DB780090FEF7 /* WaitUntil.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6B237C2425DB780090FEF7 /* WaitUntil.swift */; };
+		DA6B237F2425E0240090FEF7 /* CompletionBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6B237E2425E0240090FEF7 /* CompletionBlock.swift */; };
+		DA6B23812425E12B0090FEF7 /* Suspend.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6B23802425E12B0090FEF7 /* Suspend.swift */; };
 		DA6CB8AB241FBB81006DADD8 /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6CB8AA241FBB81006DADD8 /* Queue.swift */; };
 		DA6CB8AD241FBE51006DADD8 /* Methods.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6CB8AC241FBE51006DADD8 /* Methods.swift */; };
 		DA6CB8AF241FCEE1006DADD8 /* ConcurrentPerform.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6CB8AE241FCEE1006DADD8 /* ConcurrentPerform.swift */; };
@@ -50,6 +59,15 @@
 		DA20CDDB241B7A4600E69841 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DA20CDDE241B7A4600E69841 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DA20CDE0241B7A4600E69841 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DA58F54D2425283C009931DD /* Operation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Operation.swift; sourceTree = "<group>"; };
+		DA6B23702425C31C0090FEF7 /* Operation&OperationQueueu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Operation&OperationQueueu.swift"; sourceTree = "<group>"; };
+		DA6B23722425C9090090FEF7 /* AsyncOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncOperation.swift; sourceTree = "<group>"; };
+		DA6B23742425CF330090FEF7 /* MaxConcurrentOperationCount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaxConcurrentOperationCount.swift; sourceTree = "<group>"; };
+		DA6B23762425D0E60090FEF7 /* CancelOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelOperation.swift; sourceTree = "<group>"; };
+		DA6B237A2425D8510090FEF7 /* Dependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dependencies.swift; sourceTree = "<group>"; };
+		DA6B237C2425DB780090FEF7 /* WaitUntil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitUntil.swift; sourceTree = "<group>"; };
+		DA6B237E2425E0240090FEF7 /* CompletionBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletionBlock.swift; sourceTree = "<group>"; };
+		DA6B23802425E12B0090FEF7 /* Suspend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Suspend.swift; sourceTree = "<group>"; };
 		DA6CB8AA241FBB81006DADD8 /* Queue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
 		DA6CB8AC241FBE51006DADD8 /* Methods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Methods.swift; sourceTree = "<group>"; };
 		DA6CB8AE241FCEE1006DADD8 /* ConcurrentPerform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcurrentPerform.swift; sourceTree = "<group>"; };
@@ -126,6 +144,7 @@
 				DA0B36952424BD3A002A754C /* Views */,
 				DAE66C8E241B85A100A0E309 /* Multithreading */,
 				DA6CB8A9241FB9E8006DADD8 /* GrandCentralDispatch */,
+				DA58F54C24252813009931DD /* Operation */,
 				DA20CDD2241B7A4200E69841 /* AppDelegate.swift */,
 				DA20CDD4241B7A4200E69841 /* SceneDelegate.swift */,
 				DA20CDD8241B7A4200E69841 /* Main.storyboard */,
@@ -134,6 +153,22 @@
 				DA20CDE0241B7A4600E69841 /* Info.plist */,
 			);
 			path = Multithreading;
+			sourceTree = "<group>";
+		};
+		DA58F54C24252813009931DD /* Operation */ = {
+			isa = PBXGroup;
+			children = (
+				DA58F54D2425283C009931DD /* Operation.swift */,
+				DA6B23702425C31C0090FEF7 /* Operation&OperationQueueu.swift */,
+				DA6B23722425C9090090FEF7 /* AsyncOperation.swift */,
+				DA6B23742425CF330090FEF7 /* MaxConcurrentOperationCount.swift */,
+				DA6B23762425D0E60090FEF7 /* CancelOperation.swift */,
+				DA6B237A2425D8510090FEF7 /* Dependencies.swift */,
+				DA6B237C2425DB780090FEF7 /* WaitUntil.swift */,
+				DA6B237E2425E0240090FEF7 /* CompletionBlock.swift */,
+				DA6B23802425E12B0090FEF7 /* Suspend.swift */,
+			);
+			path = Operation;
 			sourceTree = "<group>";
 		};
 		DA6CB8A9241FB9E8006DADD8 /* GrandCentralDispatch */ = {
@@ -247,27 +282,36 @@
 				DA6CB8AF241FCEE1006DADD8 /* ConcurrentPerform.swift in Sources */,
 				DAE66CA0241BC6EE00A0E309 /* SpinLock.swift in Sources */,
 				DA6CB8AB241FBB81006DADD8 /* Queue.swift in Sources */,
+				DA6B237D2425DB780090FEF7 /* WaitUntil.swift in Sources */,
 				DA0B36942424B1D8002A754C /* MyCollectionView.swift in Sources */,
+				DA6B237B2425D8510090FEF7 /* Dependencies.swift in Sources */,
 				DAE66C98241BA87B00A0E309 /* QualityOfService.swift in Sources */,
+				DA6B23772425D0E60090FEF7 /* CancelOperation.swift in Sources */,
 				DAE66C9C241BB44500A0E309 /* Condition.swift in Sources */,
 				DA20CDD7241B7A4200E69841 /* ViewController.swift in Sources */,
 				DAE66C9E241BC35F00A0E309 /* ReadWriteLock.swift in Sources */,
 				DA20CDD3241B7A4200E69841 /* AppDelegate.swift in Sources */,
+				DA6B23812425E12B0090FEF7 /* Suspend.swift in Sources */,
 				DAE66C96241BA85D00A0E309 /* Synchronization.swift in Sources */,
 				DA20CDD5241B7A4200E69841 /* SceneDelegate.swift in Sources */,
 				DA6CB8BD242130A5006DADD8 /* DispatchIO.swift in Sources */,
 				DA6CB8B92421269E006DADD8 /* DispatchSource.swift in Sources */,
+				DA58F54E2425283C009931DD /* Operation.swift in Sources */,
 				DA6CB8B3241FD9DE006DADD8 /* Semaphore.swift in Sources */,
+				DA6B237F2425E0240090FEF7 /* CompletionBlock.swift in Sources */,
 				DA6CB8C124236851006DADD8 /* DispatchAfter.swift in Sources */,
 				DAE66CA6241CABE000A0E309 /* AtomicOperation.swift in Sources */,
+				DA6B23752425CF330090FEF7 /* MaxConcurrentOperationCount.swift in Sources */,
 				DAE66C90241B85E000A0E309 /* Thread.swift in Sources */,
 				DAE66CA4241C9F1200A0E309 /* Deadlock.swift in Sources */,
 				DA6CB8B724212442006DADD8 /* DispatchBarrier.swift in Sources */,
 				DAE66CA2241C9E3100A0E309 /* Synchronized.swift in Sources */,
 				DA6CB8BB24212D49006DADD8 /* TargetQueueHierarchy.swift in Sources */,
+				DA6B23712425C31C0090FEF7 /* Operation&OperationQueueu.swift in Sources */,
 				DA0B36922424A971002A754C /* ImagesViewController.swift in Sources */,
 				DA6CB8B1241FD03C006DADD8 /* WorkItem.swift in Sources */,
 				DA6CB8AD241FBE51006DADD8 /* Methods.swift in Sources */,
+				DA6B23732425C9090090FEF7 /* AsyncOperation.swift in Sources */,
 				DAE66C9A241BAC3600A0E309 /* RecursiveLock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

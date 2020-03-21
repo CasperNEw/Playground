@@ -25,6 +25,7 @@ class ViewController: UIViewController {
         initFirstButton()
         initSecondButton()
         initThirdButton()
+        operation() //TODO: delete after init special button
     }
 }
 
@@ -221,5 +222,60 @@ extension ViewController {
         let source = MyDispatchSource()
         source.notify()
         source.addData(count: 3)
+    }
+}
+
+extension ViewController {
+    //TODO: add special button and logic
+    //Operation tests
+    private func operation() {
+        addOperationTest()
+        asyncOperationTest()
+        operationCountTest()
+        operationCancelTest()
+        dependenciesTest()
+        waitUntilTest()
+        completionBlockTest()
+        suspendedTest()
+    }
+    private func addOperationTest() {
+        //[Operation]
+        let operation = MyOperation()
+        operation.addOperation()
+    }
+    private func asyncOperationTest() {
+        //[AsyncOperation]
+        let operation = MyAsyncOperation()
+        operation.start()
+    }
+    private func operationCountTest() {
+        //[OperationCount]
+        let operation = MyOperationCount()
+        operation.concurrentOperationTest()
+    }
+    private func operationCancelTest() {
+        //[CancelOperation]
+        let operation = MyOperationCancel()
+        operation.cancelOperation()
+    }
+    private func dependenciesTest() {
+        //[Dependencies]
+        let dependencies = MyDependencies()
+        dependencies.dependecies()
+    }
+    private func waitUntilTest() {
+        //[WaitUntil]
+        let operation = MyWaitOperation()
+        operation.waitUntil()
+    }
+    private func completionBlockTest() {
+        //[CompletionBlock]
+        let operation = MyCompletionBlock()
+        operation.completion()
+    }
+    private func suspendedTest() {
+        //[Suspend]
+        let operation = MyOperationSuspend()
+        operation.suspend()
     }
 }
