@@ -49,7 +49,7 @@ class PhotoViewController: UIViewController {
         button.frame = CGRect(x: 0, y: 0, width: 300, height: 50)
         button.center = view.center
         button.center = CGPoint(x: view.center.x, y: view.center.y + CGFloat(195))
-        button.setTitle("Load images async & group", for: .normal)
+        button.setTitle("Click me", for: .normal)
         button.backgroundColor = UIColor.darkGray
         button.layer.cornerRadius = 15
         button.setTitleColor(UIColor.white, for: .normal)

@@ -9,12 +9,13 @@
 import UIKit
 
 class ImagesViewController: UIViewController {
-
-    var imageView = MyCollectionView()
-    var images = [UIImage]()
-    var label = UILabel()
     
-    let imagesURLs = ["https://sun9-32.userapi.com/c628018/v628018189/43519/TsDPbkc84mI.jpg", "https://sun9-11.userapi.com/hlcgxAvinbasOxZNjTgQXy_FDORIN7dmwY6KEA/pBe2dcwzsrY.jpg", "https://sun9-69.userapi.com/kmyitAd-gqAzQ7izZy7fnEUqaOGKE9ugs35f2Q/_KkdA_sm9As.jpg", "https://sun9-11.userapi.com/hlcgxAvinbasOxZNjTgQXy_FDORIN7dmwY6KEA/pBe2dcwzsrY.jpg", "https://sun9-69.userapi.com/kmyitAd-gqAzQ7izZy7fnEUqaOGKE9ugs35f2Q/_KkdA_sm9As.jpg", "https://sun9-32.userapi.com/c628018/v628018189/43519/TsDPbkc84mI.jpg", "https://sun9-69.userapi.com/kmyitAd-gqAzQ7izZy7fnEUqaOGKE9ugs35f2Q/_KkdA_sm9As.jpg", "https://sun9-32.userapi.com/c628018/v628018189/43519/TsDPbkc84mI.jpg", "https://sun9-11.userapi.com/hlcgxAvinbasOxZNjTgQXy_FDORIN7dmwY6KEA/pBe2dcwzsrY.jpg"]
+    private var imageView = MyCollectionView()
+    private var images = [UIImage]()
+    private var label = UILabel()
+    private var completedTestsCount = 0
+    
+    private let imagesURLs = ["https://sun9-32.userapi.com/c628018/v628018189/43519/TsDPbkc84mI.jpg", "https://sun9-11.userapi.com/hlcgxAvinbasOxZNjTgQXy_FDORIN7dmwY6KEA/pBe2dcwzsrY.jpg", "https://sun9-69.userapi.com/kmyitAd-gqAzQ7izZy7fnEUqaOGKE9ugs35f2Q/_KkdA_sm9As.jpg", "https://sun9-11.userapi.com/hlcgxAvinbasOxZNjTgQXy_FDORIN7dmwY6KEA/pBe2dcwzsrY.jpg", "https://sun9-69.userapi.com/kmyitAd-gqAzQ7izZy7fnEUqaOGKE9ugs35f2Q/_KkdA_sm9As.jpg", "https://sun9-32.userapi.com/c628018/v628018189/43519/TsDPbkc84mI.jpg", "https://sun9-69.userapi.com/kmyitAd-gqAzQ7izZy7fnEUqaOGKE9ugs35f2Q/_KkdA_sm9As.jpg", "https://sun9-32.userapi.com/c628018/v628018189/43519/TsDPbkc84mI.jpg", "https://sun9-11.userapi.com/hlcgxAvinbasOxZNjTgQXy_FDORIN7dmwY6KEA/pBe2dcwzsrY.jpg"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,12 +25,11 @@ class ImagesViewController: UIViewController {
         super.viewDidAppear(true)
         initImageView()
         initStatusLabel()
-        asyncGroup()
-        asyncUrlSession()
+        loadDataForImages()
     }
     
     private func setupView() {
-        self.title = "Load images async & group"
+        self.title = "Click me"
         self.view.backgroundColor = UIColor.gray
     }
     private func initImageView() {
@@ -49,6 +49,42 @@ class ImagesViewController: UIViewController {
         
     }
     
+    private func loadDataForImages() {
+        loadImagesWithDispatchGroup()
+        loadImagesWithUrlSession()
+        loadImagesWithOperation()
+    }
+    
+    private func checkStatus() {
+        completedTestsCount += 1
+        if completedTestsCount == 3 {
+            self.label.text = "Test completed"
+        }
+    }
+    
+    private func loadImagesWithDispatchGroup() {
+        print("[LoadImages] DispatchGroup loading started")
+        let aGroup = DispatchGroup()
+        
+        for index in 0...2 {
+            guard let url = URL(string: imagesURLs[index]) else { return }
+            aGroup.enter()
+            asyncLoadImage(imageURL: url, runQueue: .global(), completionQueue: .main) { [weak self] (result, error) in
+                guard let image = result else { return }
+                self?.images.append(image)
+                aGroup.leave()
+            }
+        }
+        
+        aGroup.notify(queue: .main) { [weak self] in
+            for index in 0...2 {
+                self?.imageView.imageViews[index].image = self?.images[index]
+            }
+            self?.checkStatus()
+            print("[LoadImages] DispatchGroup loading completed")
+        }
+    }
+    
     private func asyncLoadImage(imageURL: URL,
                                 runQueue: DispatchQueue,
                                 completionQueue: DispatchQueue,
@@ -63,33 +99,9 @@ class ImagesViewController: UIViewController {
         }
     }
     
-    private func asyncGroup() {
-        print("[LoadImages] DispatchGroup loading started")
-        let aGroup = DispatchGroup()
-        
-        for index in 0...5 {
-            guard let url = URL(string: imagesURLs[index]) else { return }
-            aGroup.enter()
-            asyncLoadImage(imageURL: url, runQueue: .global(), completionQueue: .main) { [weak self] (result, error) in
-                guard let image = result else { return }
-                self?.images.append(image)
-                aGroup.leave()
-            }
-        }
-        
-        aGroup.notify(queue: .main) { [weak self] in
-            for index in 0...5 {
-                self?.imageView.imageViews[index].image = self?.images[index]
-            }
-            //self?.label.isHidden = true
-            self?.label.text = "Test completed"
-            print("[LoadImages] DispatchGroup loading completed")
-        }
-    }
-    
-    private func asyncUrlSession() {
+    private func loadImagesWithUrlSession() {
         print("[LoadImages] URLSession loading started")
-        for index in 6...8 {
+        for index in 3...5 {
             guard let url = URL(string: imagesURLs[index]) else { return }
             let request = URLRequest(url: url)
             let task = URLSession.shared.dataTask(with: request) { [weak self] (data, response, error) in
@@ -100,6 +112,24 @@ class ImagesViewController: UIViewController {
             }
             task.resume()
         }
+        checkStatus()
         print("[LoadImages] URLSession loading completed")
+    }
+    
+    private func loadImagesWithOperation() {
+        print("[LoadImages] Operation loading started")
+        let queue = OperationQueue()
+
+        for index in 6...8 {
+            let operation = BlockOperation {
+                guard let url = URL(string: self.imagesURLs[index]) else { return }
+                guard let data = try? Data(contentsOf: url) else { return }
+                guard let image = UIImage(data: data) else { return }
+                OperationQueue.main.addOperation { self.imageView.imageViews[index].image = image }
+            }
+            queue.addOperation(operation)
+        }
+        checkStatus()
+        print("[LoadImages] Operation loading completed")
     }
 }

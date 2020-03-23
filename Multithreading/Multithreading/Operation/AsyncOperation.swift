@@ -10,13 +10,13 @@ import Foundation
 //Простейший пример реализации асинхронной операции, необходимые переопределения методов и свойств
 class MyAsyncOperation: Operation {
     
-    private var finish = false
-    private var execute = false
     private let queue = DispatchQueue(label: "AsyncOperation")
+    private var execute = false
+    private var finish = false
     
     override var isAsynchronous: Bool { return true }
-    override var isFinished: Bool { return finish }
     override var isExecuting: Bool { return execute }
+    override var isFinished: Bool { return finish }
     
     override func start() {
         print("[AsyncOperation] operation start")
@@ -33,8 +33,8 @@ class MyAsyncOperation: Operation {
         print("[AsyncOperation] operation completed")
         willChangeValue(forKey: "isFinished")
         willChangeValue(forKey: "isExecuting")
-        finish = true
         execute = false
+        finish = true
         didChangeValue(forKey: "isFinished")
         didChangeValue(forKey: "isExecuting")
     }

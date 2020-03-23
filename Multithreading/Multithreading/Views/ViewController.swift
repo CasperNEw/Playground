@@ -15,6 +15,8 @@ class ViewController: UIViewController {
     var secondButtonIsReady = true
     var thirdButton = UIButton()
     var thirdButtonIsReady = true
+    var fourthButton = UIButton()
+    var fourthButtonIsReady = true
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,7 +27,7 @@ class ViewController: UIViewController {
         initFirstButton()
         initSecondButton()
         initThirdButton()
-        operation() //TODO: delete after init special button
+        initFourthButton()
     }
 }
 
@@ -40,6 +42,7 @@ extension ViewController {
         firstButton.addTarget(self, action: #selector(firstButtonAction), for: .touchUpInside)
         secondButton.addTarget(self, action: #selector(secondButtonAction), for: .touchUpInside)
         thirdButton.addTarget(self, action: #selector(thirdButtonAction), for: .touchUpInside)
+        fourthButton.addTarget(self, action: #selector(fourthButtonAction), for: .touchUpInside)
     }
     
     @objc func firstButtonAction() {
@@ -52,11 +55,14 @@ extension ViewController {
     @objc func thirdButtonAction() {
         thirdButtonIsReady ? grandCentralDispatch() : testIsRunningNotification()
     }
+    @objc func fourthButtonAction() {
+        fourthButtonIsReady ? operation() : testIsRunningNotification()
+    }
     
     private func initFirstButton() {
         firstButton.frame = CGRect(x: 0, y: 0, width: 300, height: 50)
-        firstButton.center = view.center
-        firstButton.setTitle("Load Image", for: .normal)
+        firstButton.center = CGPoint(x: view.center.x, y: view.center.y - CGFloat(70))
+        firstButton.setTitle("Load Images", for: .normal)
         firstButton.backgroundColor = UIColor.darkGray
         firstButton.layer.cornerRadius = 15
         firstButton.setTitleColor(UIColor.white, for: .normal)
@@ -64,8 +70,8 @@ extension ViewController {
     }
     private func initSecondButton() {
         secondButton.frame = CGRect(x: 0, y: 0, width: 300, height: 50)
-        secondButton.center = CGPoint(x: view.center.x, y: view.center.y + CGFloat(70))
-        secondButton.setTitle("Multithreading tests", for: .normal)
+        secondButton.center = view.center
+        secondButton.setTitle("Multithreading", for: .normal)
         secondButton.backgroundColor = UIColor.darkGray
         secondButton.layer.cornerRadius = 15
         secondButton.setTitleColor(UIColor.white, for: .normal)
@@ -73,12 +79,21 @@ extension ViewController {
     }
     private func initThirdButton() {
         thirdButton.frame = CGRect(x: 0, y: 0, width: 300, height: 50)
-        thirdButton.center = CGPoint(x: view.center.x, y: view.center.y + CGFloat(140))
-        thirdButton.setTitle("GCD tests", for: .normal)
+        thirdButton.center = CGPoint(x: view.center.x, y: view.center.y + CGFloat(70))
+        thirdButton.setTitle("GCD", for: .normal)
         thirdButton.backgroundColor = UIColor.darkGray
         thirdButton.layer.cornerRadius = 15
         thirdButton.setTitleColor(UIColor.white, for: .normal)
         view.addSubview(thirdButton)
+    }
+    private func initFourthButton() {
+        fourthButton.frame = CGRect(x: 0, y: 0, width: 300, height: 50)
+        fourthButton.center = CGPoint(x: view.center.x, y: view.center.y + CGFloat(140))
+        fourthButton.setTitle("Operation", for: .normal)
+        fourthButton.backgroundColor = UIColor.darkGray
+        fourthButton.layer.cornerRadius = 15
+        fourthButton.setTitleColor(UIColor.white, for: .normal)
+        view.addSubview(fourthButton)
     }
     private func testStartNotification(time: Int) {
         let alert = UIAlertController(title: "Notification", message: "The test is running, the average runtime is \(String(time)) seconds, you can see the result in the console", preferredStyle: .actionSheet)
@@ -226,17 +241,27 @@ extension ViewController {
 }
 
 extension ViewController {
-    //TODO: add special button and logic
     //Operation tests
     private func operation() {
-        addOperationTest()
-        asyncOperationTest()
-        operationCountTest()
-        operationCancelTest()
-        dependenciesTest()
-        waitUntilTest()
-        completionBlockTest()
-        suspendedTest()
+        fourthButtonIsReady = false
+        testStartNotification(time: 3)
+        
+        let group = DispatchGroup()
+        let queue = DispatchQueue.global()
+        queue.async(group: group) { [weak self] in
+            self?.addOperationTest()
+            self?.asyncOperationTest()
+            self?.operationCountTest()
+            self?.operationCancelTest()
+            self?.dependenciesTest()
+            self?.waitUntilTest()
+            self?.completionBlockTest()
+            self?.suspendedTest()
+        }
+        group.notify(queue: .main) { [weak self] in
+            self?.fourthButtonIsReady = true
+            print("[Operation] All test completed")
+        }
     }
     private func addOperationTest() {
         //[Operation]

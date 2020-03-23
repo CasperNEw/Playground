@@ -23,6 +23,7 @@ class MyOperation {
     func addOperation() {
         print("[Operation] start test 'add'")
         operationQueue.addOperation {
+            print("[Operation] \(Thread.current)")
             print("[Operation] add operation completed")
         }
         operationQueue.addOperation(operation)
